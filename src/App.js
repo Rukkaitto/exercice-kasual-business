@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { AirMap } from './components/AirMap'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      lat: 0,
+      lng: 0,
+      measurements: {},
+    }
+  }
+
+  componentDidMount() {
+    fetch('https://api.openaq.org/v1/measurements?country=FR')
+      .then(response => response.json())
+      .then(data => this.setState({ 
+        measurements: data["results"],
+        lat: data["results"][0]["coordinates"]["latitude"],
+        lng: data["results"][0]["coordinates"]["longitude"],
+      }));
+  }
+
+  render() {
+    var position = [this.state.lat, this.state.lng];
+    var measurements = [];
+    if (this.state.measurements[0]) {
+      measurements = this.state.measurements;
+    }
+
+    return (
+      <AirMap measurements={measurements} position={position}/>
+    )
+  }
 }
 
 export default App;
