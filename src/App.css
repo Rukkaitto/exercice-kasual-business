@@ -30,3 +30,32 @@
   left: 3px;
   bottom: 3px;
 }
+
+@media screen and (max-width: 600px) {
+  #filters {
+    bottom: 0;
+    position: fixed;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100vw;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  #filters button {
+    font-size: 1em;
+    padding: 10px;
+    align-self: center;
+  }
+
+  #filters div {
+    margin: 5px 0 5px 10px;
+  }
+
+  #filters input, #filters select {
+    padding: 3px;
+  }
+
+}
