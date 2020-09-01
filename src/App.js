@@ -3,7 +3,7 @@ import "./App.css";
 import { AirMap } from "./components/AirMap";
 import { CountrySelector } from "./components/CountrySelector";
 import { ValueInput } from "./components/ValueInput";
-import loadingGif from "./images/loading.gif"
+import loadingGif from "./images/loading.gif";
 
 class App extends React.Component {
   constructor() {
@@ -63,8 +63,8 @@ class App extends React.Component {
   componentDidMount() {
     // Calls the /countries endpoint to get a list of countries and country codes
     fetch("https://api.openaq.org/v1/countries")
-      .then(response => response.json())
-      .then(data => this.setState({
+      .then((response) => response.json())
+      .then((data) => this.setState({
         countries: data["results"],
       }));
 
@@ -96,8 +96,8 @@ class App extends React.Component {
           {this.state.loading ? <img src={loadingGif} alt="spinner gif" height="50px"></img> : ""}
         </div>
       </React.Fragment>
-    )
-  };
+    );
+  }
 }
 
 export default App;
