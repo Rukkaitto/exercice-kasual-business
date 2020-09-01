@@ -1,12 +1,12 @@
-import React from 'react';
-import '../App.css';
+import React from "react";
+import "../App.css";
 
 export class CountrySelector extends React.Component {
    constructor() {
       super();
       this.state = {
          value: "FR",
-      }
+      };
 
       this.handleChange = this.handleChange.bind(this);
    }
@@ -34,6 +34,6 @@ export class CountrySelector extends React.Component {
                })}
             </select>
          </div>
-      )
+      );
    }
 }

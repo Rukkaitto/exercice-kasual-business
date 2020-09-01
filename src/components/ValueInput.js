@@ -1,5 +1,5 @@
-import React from 'react';
-import '../App.css';
+import React from "react";
+import "../App.css";
 
 export class ValueInput extends React.Component {
    constructor() {
@@ -29,6 +29,6 @@ export class ValueInput extends React.Component {
                <input type="number" name={this.props.name} value={this.state.value} onChange={this.handleChange} />
             </label>
          </div>
-      )
+      );
    }
 }

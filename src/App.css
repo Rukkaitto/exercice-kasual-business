@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
 }
 
 #filters input {
@@ -22,7 +22,7 @@
 }
 
 #filters button {
-  margin: 5px
+  margin: 5px;
 }
 
 #filters img {

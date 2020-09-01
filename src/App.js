@@ -1,9 +1,9 @@
-import React from 'react';
-import './App.css';
-import { AirMap } from './components/AirMap';
-import { CountrySelector } from './components/CountrySelector';
-import { ValueInput } from './components/ValueInput';
-import loadingGif from './images/loading.gif'
+import React from "react";
+import "./App.css";
+import { AirMap } from "./components/AirMap";
+import { CountrySelector } from "./components/CountrySelector";
+import { ValueInput } from "./components/ValueInput";
+import loadingGif from "./images/loading.gif"
 
 class App extends React.Component {
   constructor() {
@@ -14,7 +14,7 @@ class App extends React.Component {
       measurements: {},
       countries: [],
       loading: false,
-    }
+    };
     this.from = 0;
     this.to = 100;
     this.countryCode = "FR";
@@ -27,17 +27,16 @@ class App extends React.Component {
 
   // Calls the /measurements endpoint with a country code as the argument
   fetchMeasurements(countryCode, from, to) {
-    const url = 'https://api.openaq.org/v1/measurements?country=' + countryCode + "&value_from=" + from + "&value_to=" + to;
-    console.log(url);
+    const url = "https://api.openaq.org/v1/measurements?country=" + countryCode + "&value_from=" + from + "&value_to=" + to;
     fetch(url)
-      .then(response => response.json())
-      .then(data => this.setState({ 
+      .then((response) => response.json())
+      .then((data) => this.setState({ 
         measurements: data["results"],
         lat: data["results"][0] ? data["results"][0]["coordinates"]["latitude"] : 0,
         lng: data["results"][0] ? data["results"][0]["coordinates"]["longitude"] : 0,
       }))
       .then(() => {
-        this.setState({loading: false})
+        this.setState({loading: false});
       });
       
   }
@@ -63,7 +62,7 @@ class App extends React.Component {
 
   componentDidMount() {
     // Calls the /countries endpoint to get a list of countries and country codes
-    fetch('https://api.openaq.org/v1/countries')
+    fetch("https://api.openaq.org/v1/countries")
       .then(response => response.json())
       .then(data => this.setState({
         countries: data["results"],
@@ -74,7 +73,7 @@ class App extends React.Component {
   }
 
   render() {
-    const position = [this.state.lat ?? 0, this.state.lng ?? 0] // The position of the center of the map
+    const position = [this.state.lat ?? 0, this.state.lng ?? 0]; // The position of the center of the map
     var measurements = [];
     var countries = [];
 
@@ -94,11 +93,11 @@ class App extends React.Component {
           <ValueInput name="from" defaultValue={0} handleValueChange={this.handleFromChange}/>
           <ValueInput name="to" defaultValue={100} handleValueChange={this.handleToChange}/>
           <button onClick={this.handleSubmit}>Apply filters</button>
-          {this.state.loading ? <img src={loadingGif} alt="spinner gif" height="50px"></img> : ''}
+          {this.state.loading ? <img src={loadingGif} alt="spinner gif" height="50px"></img> : ""}
         </div>
       </React.Fragment>
     )
-  }
+  };
 }
 
 export default App;

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import React from "react";
+import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import { Media } from 'react-breakpoints'
+import { Media } from "react-breakpoints";
 
 
 
@@ -10,7 +10,7 @@ export class AirMap extends React.Component {
       super();
       this.state = {
          zoom: 5,
-      }
+      };
    }
 
    render() {
