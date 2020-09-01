@@ -10,6 +10,7 @@
     "leaflet": "^1.6.0",
     "leaflet.markercluster": "^1.4.1",
     "react": "^16.13.1",
+    "react-breakpoints": "^3.0.3",
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.7.0",
     "react-leaflet-markercluster": "^2.0.0",
