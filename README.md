@@ -1,5 +1,7 @@
 ## How to run
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d093b39f57ef4663a5d930ae90c5de41)](https://app.codacy.com/manual/Rukkaitto/exercice-kasual-business?utm_source=github.com&utm_medium=referral&utm_content=Rukkaitto/exercice-kasual-business&utm_campaign=Badge_Grade_Dashboard)
+
 To run this project, run:
 
 ### `npm install`
