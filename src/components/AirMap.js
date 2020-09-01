@@ -1,7 +1,6 @@
 import React from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
-
 export class AirMap extends React.Component {
    constructor() {
       super();
@@ -18,15 +17,18 @@ export class AirMap extends React.Component {
                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {this.props.measurements.map((measurement, key) => { // Maps the measurements to corresponding markers and popups
+               if (!measurement["coordinates"]["longitude"] || !measurement["coordinates"]["latitude"]) { // Checks if the latitude or longitude are null or undefined
+                  return null;
+               }
                const markerPosition = [measurement["coordinates"]["latitude"], measurement["coordinates"]["longitude"]];
                return (
-               <Marker key={key} position={markerPosition}>
-                  <Popup key={key}>
-                     <b>Location</b> : {measurement["city"]} <br/>
-                     <b>Date</b> : {measurement["date"]["local"]} <br/>
-                     <b>Value</b> : {measurement["value"]} {measurement["unit"]}
-                  </Popup>
-               </Marker>
+                  <Marker key={key} position={markerPosition}>
+                     <Popup key={key}>
+                        <b>Location</b> : {measurement["city"]} <br />
+                        <b>Date</b> : {measurement["date"]["local"]} <br />
+                        <b>Value</b> : {measurement["value"]} {measurement["unit"]}
+                     </Popup>
+                  </Marker>
                );
             })}
          </Map>

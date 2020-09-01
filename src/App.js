@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
 import { AirMap } from './components/AirMap';
-import {CountrySelector} from './components/CountrySelector';
+import { CountrySelector } from './components/CountrySelector';
+import { ValueInput } from './components/ValueInput';
+import loadingGif from './images/loading.gif'
 
 class App extends React.Component {
   constructor() {
@@ -11,24 +13,52 @@ class App extends React.Component {
       lng: 0,
       measurements: {},
       countries: [],
+      loading: false,
     }
+    this.from = 0;
+    this.to = 100;
+    this.countryCode = "FR";
+
     this.handleCountryChange = this.handleCountryChange.bind(this);
+    this.handleFromChange = this.handleFromChange.bind(this);
+    this.handleToChange = this.handleToChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   // Calls the /measurements endpoint with a country code as the argument
-  fetchMeasurements(countryCode) {
-    fetch('https://api.openaq.org/v1/measurements?country=' + countryCode)
+  fetchMeasurements(countryCode, from, to) {
+    const url = 'https://api.openaq.org/v1/measurements?country=' + countryCode + "&value_from=" + from + "&value_to=" + to;
+    console.log(url);
+    fetch(url)
       .then(response => response.json())
       .then(data => this.setState({ 
         measurements: data["results"],
         lat: data["results"][0] ? data["results"][0]["coordinates"]["latitude"] : 0,
         lng: data["results"][0] ? data["results"][0]["coordinates"]["longitude"] : 0,
-      }));
+      }))
+      .then(() => {
+        this.setState({loading: false})
+      });
+      
   }
 
-  // Re-calls the API when the selected country changes
-  handleCountryChange(value) {
-    this.fetchMeasurements(value);
+  handleCountryChange(countryCode) {
+    this.countryCode = countryCode;
+  }
+
+  handleFromChange(from) {
+    this.from = from;
+  }
+
+  handleToChange(to) {
+    this.to = to;
+  }
+
+  // Calls the API with the values present in the state and shows the loading spinner
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({loading: true});
+    this.fetchMeasurements(this.countryCode, this.from, this.to);
   }
 
   componentDidMount() {
@@ -40,11 +70,11 @@ class App extends React.Component {
       }));
 
     // Measurements
-    this.fetchMeasurements("FR");
+    this.fetchMeasurements("FR", 0, 100);
   }
 
   render() {
-    const position = [this.state.lat, this.state.lng] // The position of the center of the map
+    const position = [this.state.lat ?? 0, this.state.lng ?? 0] // The position of the center of the map
     var measurements = [];
     var countries = [];
 
@@ -61,6 +91,10 @@ class App extends React.Component {
         <AirMap measurements={measurements} position={position}/>
         <div id="filters">
           <CountrySelector countries={countries} handleCountryChange={this.handleCountryChange}/>
+          <ValueInput name="from" defaultValue={0} handleValueChange={this.handleFromChange}/>
+          <ValueInput name="to" defaultValue={100} handleValueChange={this.handleToChange}/>
+          <button onClick={this.handleSubmit}>Apply filters</button>
+          {this.state.loading ? <img src={loadingGif} alt="spinner gif" height="50px"></img> : ''}
         </div>
       </React.Fragment>
     )

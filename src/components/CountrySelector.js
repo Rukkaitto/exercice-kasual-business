@@ -4,17 +4,22 @@ import '../App.css';
 export class CountrySelector extends React.Component {
    constructor() {
       super();
+      this.state = {
+         value: "FR",
+      }
+
       this.handleChange = this.handleChange.bind(this);
    }
 
    handleChange(event) { // Moves state up
+      this.setState({ value: event.target.value });
       this.props.handleCountryChange(event.target.value);
    }
 
    render() {
       return (
-         <div id="country-selector">
-            <select name="countries" id="countries" onChange={this.handleChange}>
+         <div>
+            <select name="countries" id="countries" onChange={this.handleChange} value={this.state.value}>
                {this.props.countries.map((country, key) => {
                   const countryName = country["name"];
                   const countryCode = country["code"];
@@ -22,7 +27,6 @@ export class CountrySelector extends React.Component {
                      <option
                         key={key}
                         value={countryCode}
-                        selected={countryCode === "FR" ? "selected" : ""} // Sets the dropdown's value to FR by default
                      >
                         {countryName ? countryName : countryCode}
                      </option> // If there is no "name" value then the country code shall be used
